@@ -1,0 +1,25 @@
+<div class="modal  fade" th:id="'edicao-nome-modal' + ${ativo.cod}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Nome</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/editarNomeAtivo/{id}(id=${ativo.cod})}" th:object="${ativo}" method="post"
+                    enctype="multipart/form-data">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="nome">Nome do Ativo:</span>
+                            <input name="nome" type="text" class="form-control" placeholder="Nome do Ativo"
+                                aria-label="Nome do Ativo" aria-describedby="nome" th:value="${ativo.nome}">
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Nome</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

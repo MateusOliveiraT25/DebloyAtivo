@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Header</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .navbar {
+      background-color: #000000;
+    }
+
+    .navbar-toggler-icon {
+      filter: invert(1);
+    }
+
+    .nav-link {
+      color: #ffffff !important;
+    }
+
+    .nav-item:hover {
+      background-color: #555555 !important;
+    }
+
+    .btn-dark {
+      background-color: #000000;
+      border-color: #000000;
+    }
+
+    .btn-dark:hover {
+      background-color: #555555;
+      border-color: #555555;
+    }
+
+    .text-white {
+      color: #000000 !important;
+    }
+
+    .custom-tooltip {
+      --bs-tooltip-bg: #000000;
+    }
+
+    .container-fluid-header {
+      background-color: #000000;
+      padding: 15px;
+    }
+
+    .container-fluid-header h1 {
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg sticky-top">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-pills nav-fill">
+            <li class="nav-item" style="border-radius: 5px; transition: background-color 0.3s;"
+              onmouseover="this.style.backgroundColor='#555555'" onmouseout="this.style.backgroundColor=''">
+              <a class="nav-link" href="/index">Início</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/cadastro">Cadastro</a>
+            </li>
+          </ul>
+          <button type="button" class="btn btn-dark" onmouseover="this.style.backgroundColor='#555555'"
+            onmouseout="this.style.backgroundColor=''">
+            <a class="nav-link" href="/administracao" data-bs-toggle="tooltip" data-bs-placement="bottom"
+              data-bs-custom-class="custom-tooltip" data-bs-title="Apenas para uso do Administrador do Site.">Admin</a>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid-header text-center">
+      <img src="/img/icons/anel.png" alt="logo" class="" style="height: 100px;">
+      <h1>Senai</h1>
+    </div>
+  </header>
+  <script>
+    const popover = new bootstrap.Popover('.example-popover', {
+      container: 'body'
+    })
+  </script>
+</body>
+
+</html>
