@@ -19,7 +19,7 @@ FROM openjdk:17-jdk-slim
 EXPOSE 8080
 
 # Copie o arquivo JAR da etapa de compilação para o contêiner de execução
-COPY --from=build /target/lojalivro-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /target/ativospatrimoniais-0.0.1-SNAPSHOT.jar app.jar
 
 # Defina o comando de inicialização da aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
