@@ -1,0 +1,20 @@
+<div class="modal fade modal-lg" th:id="'excluir-modal' + ${ambiente.id}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmação de Exclusão</h5>
+            </div>
+            <div class="modal-body">
+                <p>Você tem certeza que deseja excluir a ambiente?</p>
+                <h1 class="mb-3" data-ambiente-id="${ambiente.id}" th:text="${ambiente.nomeAmbiente}">
+                </h1>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-danger btn-sm" th:href="@{'/excluir-ambiente/' + ${ambiente.id}}"
+                        role="button">Excluir Ambiente</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

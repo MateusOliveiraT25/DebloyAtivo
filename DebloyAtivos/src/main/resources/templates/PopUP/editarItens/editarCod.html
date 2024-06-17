@@ -1,0 +1,24 @@
+<div class="modal fade" th:id="'edicao-cod-modal' + ${ativo.cod}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Codigo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/editarCodAtivo/{id}(id=${ativo.cod})}" th:object="${ativo}" method="post" enctype="multipart/form-data">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="cod">Codigo do Ativo:</span>
+                            <input name="novoCod" type="text" class="form-control" placeholder="Codigo do Ativo" aria-label="Codigo do Ativo" aria-describedby="codigo" th:value="${ativo.cod}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Codigo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/sidebar.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Ativos</title>
+</head>
+<style>
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .img {
+        object-fit: cover;
+
+        border-radius: 5px;
+    }
+
+    @media only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+        .img {
+            height: 50%;
+            width: 50%;
+        }
+
+        .imagemAtivo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .excluir {
+            width: 100%;
+        }
+    }
+</style>
+
+<body>
+    <!-- POP UP DE AVISOS -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" id="error-message" th:if="${param.error}">
+        <div class="align-items-center text-bg-danger p-3 badge border-top border-start border-danger-subtle shadow transparent bg-opacity-75"
+            role="alert" aria-live="assertive" aria-atomic="true" style="width: 350px;">
+            <div class="toast-header">
+                <i class="bi bi-bug-fill"></i>
+                <strong class="me-auto ms-2">Aviso</strong>
+                <small>Agora</small>
+            </div>
+            <div class="toast-body mt-3">
+                <p th:text="${param.error}">Erro</p>
+                <span th:text="${error}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3 opacity-100" id="success-message"
+        th:if="${param.success}">
+        <div class="align-items-center text-bg-success p-3 badge border-top border-start border-success-subtle shadow transparent bg-opacity-75"
+            role="alert" aria-live="assertive" aria-atomic="true" style="width: 350px;">
+            <div class="toast-header">
+                <i class="bi bi-exclamation-square-fill"></i>
+                <strong class="me-auto ms-2">Aviso</strong>
+                <small>Agora</small>
+            </div>
+            <div class="toast-body mt-3">
+                <p th:text="${param.success}">Sucesso</p>
+                <span th:text="${success}"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div>
+            <i class="bi bi-person-gear"></i>
+            <p>Administrador</p>
+        </div>
+        <div>
+            <i class="bi bi-person-lines-fill"></i>
+            <p>Professor</p>
+        </div>
+    </div>
+
+    <!-- Corpo -->
+    <div class="col" style="margin-left: 115px; margin-right: 15px; margin-top: 15px; margin-bottom: 15px;">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <!-- Funcionarios -->
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-person-lines-fill"></i> FUNCIONARIOS</h5>
+                        <div class="list-group">
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">Nome</th>
+                                        <th scope="col" class="text-center">Ambiente</th>
+                                        <th scope="col" class="text-center">Função</th>
+                                        <th scope="col" class="text-center">Privilegio</th>
+                                        <th scope="col" class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="funcionario-tbody">
+                                    <tr th:each="funcionario : ${funcionario}">
+                                        <td>
+                                            <a href="#" class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover nowrap">
+                                                <button class="btn btn-outline-dark border-0 btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        th:attr="data-bs-target='#edicao-nome-modal' + ${funcionario.username}"
+                                                        th:text="${funcionario.username}"></button>
+                                            </a>
+                                            <!-- <div th:insert="~{PopUP/editarItens/editarNome.html :: div}"></div> -->
+                                        </td>
+                                        <td>
+                                            <a href="#" class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                                                <button class="btn btn-outline-dark border-0 btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        th:attr="data-bs-target='#edicao-ambiente-modal' + ${funcionario.username}"
+                                                        th:text="${funcionario.ambiente.nomeAmbiente}"></button>
+                                            </a>
+                                            <!-- <div th:insert="~{PopUP/editarItens/editarAmbiente.html :: div}"></div> -->
+                                        </td>
+                                        <td>
+                                            <a href="#" class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                                                <button class="btn btn-outline-dark border-0 btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        th:attr="data-bs-target='#edicao-cargo-modal' + ${funcionario.username}"
+                                                        th:text="${funcionario.cargo}"></button>
+                                            </a>
+                                            <!-- Modal para editar cargo -->
+                                            <!-- <div th:insert="~{PopUP/editarItens/editarCargo.html :: div}"></div> -->
+                                        </td>
+                                        <td>
+                                            <a href="#" class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                                                <button class="btn btn-outline-dark border-0 btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        th:attr="data-bs-target='#edicao-privilegio-modal' + ${funcionario.username}"
+                                                        th:text="${funcionario.privilegio}"></button>
+                                            </a>
+                                            <!-- Modal para editar privilégio -->
+                                            <!-- <div th:insert="~{PopUP/editarItens/editarPrivilegio.html :: div}"></div> -->
+                                        <!-- </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#cadastro-modal">
+                                Cadastrar novo funcionario</button>
+                        </div>
+                        <th:block th:replace="~{PopUP/cadastrodefuncionarios :: modal('cadastro-modal')}">modal</th:block>
+                    </div>
+                </div>
+            </div>
+            <!-- Ambientes -->
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-box-seam"></i> AMBIENTES</h5>
+                        <div class="list-group" th:each="ambiente : ${ambientes}">
+                            <div class="btn-group">
+                               <button class="btn btn-outline-dark border-0 btn-sm"
+                                data-bs-toggle="modal"
+                                th:attr="data-bs-target='#edicao-nome-modal' + ${ambiente.nomeAmbiente}"
+                                th:text="${ambiente.nomeAmbiente}"
+                                style="width: 90%;"></button>
+                                <button class="btn btn-sm btn-outline-danger nowrap" data-bs-toggle="modal"
+                                    th:attr="data-bs-target='#excluir-modal' + ${ambiente.id}"
+                                    data-ambiente-id="${ambiente.id}">
+                                    <i class="bi bi-trash3-fill"></i>
+                                </button>
+                            </div>
+                            <div th:insert="~{PopUP/excluirAmbiente.html :: div}"></div>
+                        </div>
+                        <form class="d-flex" role="search" th:action="@{/ambientes}" method="post">
+                            <div class="input-group input-group-sm me-auto mb-2 mb-lg-0 mt-2">
+                                <input class="form-control me-1" type="search" name="nomeAmbiente"
+                                    placeholder="Novo Ambiente" aria-label="Search" th:value="${ambiente}">
+                                <button class="btn btn-outline-success input-group-text"
+                                    type="submit">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Ativos -->
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-pc-display"></i> ATIVOS</h5>
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">Cod.</th>
+                                    <th scope="col" class="text-center">Nome</th>
+                                    <th scope="col" class="text-center">Descrição</th>
+                                    <th scope="col" class="text-center">Ambiente</th>
+                                    <th scope="col" class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ativo-tbody">
+                                <tr th:each="ativo : ${ativo}">
+                                    <td scope="row">
+                                        <a
+                                            class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                                            <button class="btn btn-outline-dark border-0 btn-sm" data-bs-toggle="modal"
+                                                style="width: 100%; "
+                                                th:attr="data-bs-target='#edicao-cod-modal' + ${ativo.cod}"
+                                                th:text="${ativo.cod}"></button>
+                                        </a>
+                                        <div th:insert="~{PopUP/editarItens/editarCod.html :: div}"></div>
+                                    </td>
+                                    <td>
+                                        <a
+                                            class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover nowrap">
+                                            <button class="btn btn-outline-dark border-0 btn-sm" data-bs-toggle="modal"
+                                                style="width: 100%; "
+                                                th:attr="data-bs-target='#edicao-nome-modal' + ${ativo.cod}"
+                                                th:text="${ativo.nome}"></button>
+                                        </a>
+                                        <div th:insert="~{PopUP/editarItens/editarNome.html :: div}"></div>
+                                    </td>
+                                    <td>
+                                        <a
+                                            class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                                            <button class="btn btn-outline-dark border-0 btn-sm" data-bs-toggle="modal"
+                                                style="width: 100%; "
+                                                th:attr="data-bs-target='#edicao-descricao-modal' + ${ativo.cod}"
+                                                th:text="${ativo.descricao}"></button>
+                                        </a>
+                                        <div th:insert="~{PopUP/editarItens/editarDescricao.html :: div}"></div>
+                                    </td>
+
+                                    <td>
+                                        <a
+                                            class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover">
+                                            <button class="btn btn-outline-dark border-0 btn-sm" data-bs-toggle="modal"
+                                                style="width: 100%; "
+                                                th:attr="data-bs-target='#edicao-ambiente-modal' + ${ativo.cod}"
+                                                th:text="${ativo.ambiente.nomeAmbiente}"></button>
+                                        </a>
+                                        <div th:insert="~{PopUP/editarItens/editarAmbiente.html :: div}"></div>
+                                    </td>
+                                    <td>
+                                        <!-- Botao Excluir -->
+                                        <button class="btn btn-outline-danger btn-sm excluir" data-bs-toggle="modal"
+                                            th:attr="data-bs-target='#excluir-modal' + ${ativo.cod}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                        <div th:insert="~{PopUP/excluirAtivo.html :: div}"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#cadastro-ativo-modal">
+                            Cadastrar novo ativo</button>
+                    </div>
+                    <th:block th:replace="~{PopUP/cadastrodeativo :: modal('cadastro-ativo-modal')}">modal</th:block>
+                </div>
+            </div>
+            <!-- Avisos -->
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-envelope"></i> AVISOS</h5>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">Movimentação de ativo</a>
+                            <a href="#" class="list-group-item list-group-item-action">Manutenção</a>
+                            <a href="#" class="list-group-item list-group-item-action">Requisição de compra</a>
+                            <a href="#" class="list-group-item list-group-item-action">Reepreenção de aluno</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Função para remover a mensagem após alguns segundos
+        function removeMessage() {
+            // Seletor dos elementos de mensagem de erro e sucesso
+            var errorMessage = document.getElementById("error-message");
+            var successMessage = document.getElementById("success-message");
+
+            // Verifica se o elemento de mensagem de erro está presente e remove após 5 segundos
+            if (errorMessage) {
+                setTimeout(function () {
+                    errorMessage.remove();
+                }, 5000); // tempo do aviso
+            }
+
+            // Verifica se o elemento de mensagem de sucesso está presente e remove após 5 segundos
+            if (successMessage) {
+                setTimeout(function () {
+                    successMessage.remove();
+                }, 5000); // tempo do aviso
+            }
+        }
+
+        // Chama a função para remover a mensagem quando a página é carregada
+        window.onload = function () {
+            removeMessage();
+        };
+    </script>
+</body>
+
+</html>

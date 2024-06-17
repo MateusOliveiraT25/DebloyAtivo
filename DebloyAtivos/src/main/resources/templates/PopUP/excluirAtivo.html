@@ -1,0 +1,34 @@
+<div class="modal fade modal-lg" th:id="'excluir-modal' + ${ativo.cod}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmação de Exclusão</h5>
+            </div>
+            <div class="modal-body">
+                <p>Você tem certeza que deseja excluir o ativo?</p>
+                <table class="table table-success table-striped">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Descricao</th>
+                            <th>Ambiente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center">
+                            <td><p class="text-center" th:text="${ativo.cod}"></p></td>
+                            <td><p class="text-center" th:text="${ativo.nome}"></p></td>
+                            <td><p class="text-center" th:text="${ativo.descricao}"></p></td>
+                            <td><p class="text-center" th:text="${ativo.ambiente}"></p></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger btn-sm" th:href="@{'/excluir-ativo/' + ${ativo.cod}}" role="button">Excluir ativo</a>
+            </div>
+        </div>
+    </div>
+</div>
